@@ -12,6 +12,11 @@ const Container = styled.div`
   justify-content: center;
 `
 
+const ColumnContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`
+
 
 const Gameboard = () => {
   const [playerBoard, setPlayerBoard] = useState(createBoard())
@@ -19,9 +24,9 @@ const Gameboard = () => {
 
   return (
     <Container>
-      <div>
+      <ColumnContainer>
         {Object.keys(playerBoard.columns).map(column => (<Column column={playerBoard.columns[column]} key={column}/>))}
-      </div>
+      </ColumnContainer>
       <Shipyard ships={playerShips}/>
     </Container>
   )

@@ -9,7 +9,9 @@ const Container = styled.div`
 
 const Cell = ({cell}) => {
   return (
-    <Container />
+    <Container>
+      {cell.id}
+    </Container>
   )
 }
 

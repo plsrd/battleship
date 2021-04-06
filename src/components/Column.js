@@ -5,7 +5,7 @@ import Cell from './Cell'
 
 const Container = styled.div`
   display: flex;
-  flex-direct: column;
+  flex-direction: column;
 `
 
 const Column = ({column}) => {

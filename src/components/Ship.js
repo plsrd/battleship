@@ -14,7 +14,7 @@ const Piece = styled.div`
 `
 
 const Ship = ({ship}) => {
-  console.log(ship)
+
   return (
     <Container>
       {ship.pieces.map(piece => <Piece />)}

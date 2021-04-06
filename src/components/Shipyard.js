@@ -13,7 +13,6 @@ const ShipContainer = styled.div`
 `
 
 const Shipyard = ({ships}) => {
-  console.log(ships)
 
   return (
     <ShipContainer>
