@@ -4,18 +4,26 @@ import styled from 'styled-components'
 import createBoard from '../utils/gameboardFactory'
 import createShips from '../utils/shipFactory'
 import Column from "./Column"
+import Shipyard from './Shipyard'
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`
 
 
 const Gameboard = () => {
   const [playerBoard, setPlayerBoard] = useState(createBoard())
   const [playerShips, setPlayerShips] = useState(createShips())
 
-  console.log(playerShips)
-
   return (
-    <div>
-      {Object.keys(playerBoard.columns).map(column => (<Column column={playerBoard.columns[column]} />))}
-    </div>
+    <Container>
+      <div>
+        {Object.keys(playerBoard.columns).map(column => (<Column column={playerBoard.columns[column]} key={column}/>))}
+      </div>
+      <Shipyard ships={playerShips}/>
+    </Container>
   )
 
 }

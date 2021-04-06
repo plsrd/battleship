@@ -1,16 +1,14 @@
 const createShip = (name, length) => {
-  let pieces = {}
+  let pieces = []
   for (let i = 1; i <= length; i++){
-    pieces = {
+    pieces = [
       ...pieces,
-      [`${name}${i}`] : {
-        location: '',
-        isHit: false
-      }
-  }
+      `${name}${i}`
+    ]
   }
   return pieces
 }
+
 
 const shipFactory = () => {
  let ships = {

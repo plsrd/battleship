@@ -11,7 +11,7 @@ const Container = styled.div`
 const Column = ({column}) => {
   return (
     <Container >
-      {column.map(cell => <Cell cell={cell}/>)}
+      {column.map(cell => <Cell cell={cell} key={cell.id}/>)}
     </Container>
   )
 }
