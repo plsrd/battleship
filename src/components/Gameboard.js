@@ -22,7 +22,6 @@ const Gameboard = () => {
   const [playerBoard, setPlayerBoard] = useState(createBoard())
   const [playerShips, setPlayerShips] = useState(createShips())
   const [selectedShip, setSelectedShip] = useState(playerShips.find(ship => ship.id === 'cruiser'))
-  console.log(playerBoard)
 
  const placeShip = (column, cell, ship) => {
   let newBoard = playerBoard
@@ -47,9 +46,17 @@ const Gameboard = () => {
       [column]: newColumn
     }
   }
-  
   setPlayerBoard(newBoard)
+  removeFromShipyard()
  }
+
+ const removeFromShipyard =  () => {
+  const newShips = playerShips.slice()
+  newShips.splice(newShips.indexOf(selectedShip), 1)
+  setPlayerShips(newShips)
+ }
+
+
 
   return (
     <Container>
