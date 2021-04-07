@@ -6,7 +6,7 @@ const board = () => {
         newColumn.push(
           {
             id: `${id}${i}`,
-            shipPiece:''
+            shipPiece:'',
           }
         )
       }

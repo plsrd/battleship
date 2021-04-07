@@ -8,10 +8,16 @@ const Container = styled.div`
   flex-direction: column;
 `
 
-const Column = ({column}) => {
+const Column = ({column, selectedShip, placeShip}) => {
   return (
     <Container >
-      {column.map(cell => <Cell cell={cell} key={cell.id}/>)}
+      {column.map(cell => 
+        <Cell 
+          cell={cell} 
+          key={cell.id}
+          selectedShip={selectedShip}
+          placeShip={placeShip}
+        />)}
     </Container>
   )
 }

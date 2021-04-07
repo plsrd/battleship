@@ -2,14 +2,19 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Container = styled.div`
-  height: 30px;
-  width: 30px;
-  border: 1px solid lightgrey
+  height: 40px;
+  width: 40px;
+  border: 1px solid lightgrey;
+  border-radius: 10px;
+  background-color: ${props => props.hasShip ? 'lightgreen' : 'white'}
 `
 
-const Cell = ({cell}) => {
+const Cell = ({cell, selectedShip, placeShip}) => {
   return (
-    <Container>
+    <Container
+      onClick={() => placeShip(cell.id[0], cell, selectedShip)}
+      hasShip={cell.shipPiece !== ''}
+    >
       {cell.id}
     </Container>
   )
