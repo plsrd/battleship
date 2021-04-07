@@ -12,11 +12,16 @@ const ShipContainer = styled.div`
   margin-left: 100px;
 `
 
-const Shipyard = ({ships}) => {
+const Shipyard = ({ships, selectShip}) => {
 
   return (
     <ShipContainer>
-      {Object.keys(ships).map(ship => <Ship ship={ships[ship]} key={ships[ship].id}/>)}
+      {Object.keys(ships).map(ship => 
+        <Ship 
+          ship={ships[ship]} 
+          key={ships[ship].id}
+          selectShip={selectShip}
+        />)}
     </ShipContainer>
   )
 }

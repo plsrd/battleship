@@ -13,11 +13,14 @@ const Piece = styled.div`
   border: 1px solid lightgrey;
 `
 
-const Ship = ({ship}) => {
+const Ship = ({ship, selectShip}) => {
 
   return (
-    <Container>
-      {ship.pieces.map(piece => <Piece key={piece.id}/>)}
+    <Container onClick={() => selectShip(ship)}>
+      {ship.pieces.map(piece => 
+        <Piece 
+          key={piece.id}
+        />)}
     </Container>
   )
 }

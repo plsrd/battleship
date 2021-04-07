@@ -5,7 +5,6 @@ const createShip = (name, length) => {
       ...pieces,
       {
         id: `${name}${i}`,
-        location: '',
         hit: false
       }
     ]
