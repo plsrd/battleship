@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -15,9 +15,11 @@ const Piece = styled.div`
 
 const Ship = ({ship}) => {
 
+  console.log(ship)
+
   return (
     <Container>
-      {ship.pieces.map(piece => <Piece />)}
+      {ship.pieces.map(piece => <Piece key={piece.id}/>)}
     </Container>
   )
 }

@@ -16,7 +16,7 @@ const Shipyard = ({ships}) => {
 
   return (
     <ShipContainer>
-      {Object.keys(ships).map(ship => <Ship ship={ships[ship]} />)}
+      {Object.keys(ships).map(ship => <Ship ship={ships[ship]} key={ships[ship].id}/>)}
     </ShipContainer>
   )
 }

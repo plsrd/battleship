@@ -3,7 +3,11 @@ const createShip = (name, length) => {
   for (let i = 1; i <= length; i++){
     pieces = [
       ...pieces,
-      `${name}${i}`
+      {
+        id: `${name}${i}`,
+        location: '',
+        hit: false
+      }
     ]
   }
   return pieces
@@ -11,23 +15,28 @@ const createShip = (name, length) => {
 
 
 const shipFactory = () => {
- let ships = {
-   'carrier': {
-     pieces: createShip('carrier', 5)
-   },
-   'battleship': {
-    pieces: createShip('battleship', 4)
-   },
-   'cruiser': {
-    pieces: createShip('cruiser', 3)
-   },
-   'submarine': {
-    pieces: createShip('submarine', 3)
-   },
-   'destroyer': {
-    pieces: createShip('destroyer', 2)
-   },
- }
+ let ships = [
+    { 
+      id: 'cruiser',
+      pieces: createShip('carrier', 5)
+    },
+    {
+      id: 'battleship',
+      pieces: createShip('battleship', 4)
+    },
+    {
+      id:'carrier',
+      pieces: createShip('carrier', 3)
+    },
+    {
+      id:'submarine',
+      pieces: createShip('submarine', 3)
+    },
+    {
+      id:'destroyer',
+      pieces: createShip('destroyer', 2)
+    },
+  ]
 
   return ships
 }
