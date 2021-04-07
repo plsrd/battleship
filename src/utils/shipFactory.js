@@ -17,23 +17,28 @@ const shipFactory = () => {
  let ships = [
     { 
       id: 'cruiser',
-      pieces: createShip('carrier', 5)
+      pieces: createShip('carrier', 5),
+      rotation: 'vertical',
     },
     {
       id: 'battleship',
-      pieces: createShip('battleship', 4)
+      pieces: createShip('battleship', 4),
+      rotation: 'vertical',
     },
     {
       id:'carrier',
-      pieces: createShip('carrier', 3)
+      pieces: createShip('carrier', 3),
+      rotation: 'vertical',
     },
     {
       id:'submarine',
-      pieces: createShip('submarine', 3)
+      pieces: createShip('submarine', 3),
+      rotation: 'vertical',
     },
     {
       id:'destroyer',
-      pieces: createShip('destroyer', 2)
+      pieces: createShip('destroyer', 2),
+      rotation: 'vertical',
     },
   ]
 

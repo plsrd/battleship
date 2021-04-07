@@ -17,6 +17,19 @@ const ColumnContainer = styled.div`
   flex-direction: row;
 `
 
+const InfoContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`
+
+const RotateButton = styled.button`
+  outline: none;
+  height: 30px;
+  border-radius: 10px;
+  border: none;
+  background-color: lightgreen;
+`
+
 
 const Gameboard = () => {
   const [playerBoard, setPlayerBoard] = useState(createBoard())
@@ -49,9 +62,8 @@ const Gameboard = () => {
         }
       }
       setPlayerBoard(newBoard)
-
       removeFromShipyard()
-  }
+    }
   }
 
  const removeFromShipyard =  () => {
@@ -64,6 +76,17 @@ const Gameboard = () => {
    setSelectedShip(ship)
  }
 
+ const rotateShip = () => {
+  let newShips = playerShips
+  let newShip = selectedShip
+  newShip = {
+    ...newShip,
+    rotation: newShip.rotation === 'vertical' ? 'horizontal' : 'vertical'
+  }
+  newShips.splice(newShips.indexOf(selectedShip), 1, newShip)
+
+  console.log(newShips)
+ }  
 
 
   return (
@@ -79,6 +102,16 @@ const Gameboard = () => {
           ))}
       </ColumnContainer>
       <Shipyard ships={playerShips} selectShip={selectShip}/>
+      <InfoContainer>
+        <div>
+        Current Selection:
+        {selectedShip.id}
+        </div>
+        <RotateButton onClick={() => rotateShip()}>
+          rotate
+        </RotateButton>
+        
+      </InfoContainer>
     </Container>
   )
 
