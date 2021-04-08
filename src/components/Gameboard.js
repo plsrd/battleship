@@ -73,6 +73,7 @@ const Gameboard = () => {
       //console.log(newColumn, startIndex, cell)
       let columnsToFill = Object.keys(newBoard.columns)
       columnsToFill = columnsToFill.splice(columnsToFill.indexOf(column), ship.pieces.length)
+      if (columnsToFill.length !== ship.pieces.length) { return }
       columnsToFill.forEach(col => {
         newColumn = newBoard.columns[col]
         replaceCell(newColumn, newBoard.columns[col][startIndex], ship, startIndex)
