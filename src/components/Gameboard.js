@@ -34,7 +34,7 @@ const RotateButton = styled.button`
 const Gameboard = () => {
   const [playerBoard, setPlayerBoard] = useState(createBoard())
   const [playerShips, setPlayerShips] = useState(createShips())
-  const [selectedShip, setSelectedShip] = useState(playerShips.find(ship => ship.id === 'cruiser'))
+  const [selectedShip, setSelectedShip] = useState(playerShips[0])
 
  const placeShip = (column, cell, ship) => {
   let newBoard = playerBoard
@@ -84,8 +84,8 @@ const Gameboard = () => {
     rotation: newShip.rotation === 'vertical' ? 'horizontal' : 'vertical'
   }
   newShips.splice(newShips.indexOf(selectedShip), 1, newShip)
-
-  console.log(newShips)
+  setPlayerShips(newShips)
+  setSelectedShip(playerShips[0])
  }  
 
 

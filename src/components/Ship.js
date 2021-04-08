@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 const Container = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: ${props => props.rotation === 'vertical' ? 'column' : 'row'};
 `
 const Piece = styled.div`
   box-sizing: border-box;
@@ -14,9 +14,13 @@ const Piece = styled.div`
 `
 
 const Ship = ({ship, selectShip}) => {
+  console.log(ship.rotation)
 
   return (
-    <Container onClick={() => selectShip(ship)}>
+    <Container 
+      onClick={() => selectShip(ship)}
+      rotation={ship.rotation}
+    >
       {ship.pieces.map(piece => 
         <Piece 
           key={piece.id}
