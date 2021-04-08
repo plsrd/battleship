@@ -36,12 +36,12 @@ const Gameboard = () => {
   const [playerShips, setPlayerShips] = useState(createShips())
   const [selectedShip, setSelectedShip] = useState(playerShips[0])
 
-  const replaceCell = (column, cell, ship, index, startIndex) => {
+  const replaceCell = (column, cell, ship, startIndex, index) => {
     let newCell = cell
         
     newCell = {
       ...newCell,
-      shipPiece: ship.pieces[index]
+      shipPiece: ship.pieces[index === undefined ? startIndex : index]
     }
     
     column.splice(startIndex + index, 1, newCell)
@@ -57,7 +57,7 @@ const Gameboard = () => {
         return
       } else {
         cellsToFill.forEach((cell, index) => {
-          replaceCell(newColumn, cell, ship, index, startIndex)
+          replaceCell(newColumn, cell, ship, startIndex, index)
         })
 
         newBoard = {
@@ -70,7 +70,22 @@ const Gameboard = () => {
         removeFromShipyard(ship)
       }
     } else {
-      console.log(newColumn, startIndex, cell)
+      //console.log(newColumn, startIndex, cell)
+      let columnsToFill = Object.keys(newBoard.columns)
+      columnsToFill = columnsToFill.splice(columnsToFill.indexOf(column), ship.pieces.length)
+      columnsToFill.forEach(col => {
+        newColumn = newBoard.columns[col]
+        replaceCell(newColumn, newBoard.columns[col][startIndex], ship, startIndex)
+
+        newBoard = {
+          columns: {
+            ...newBoard.columns,
+            [col]: newColumn
+          }
+        }
+      })
+      setPlayerBoard(newBoard)
+      removeFromShipyard(ship)
     }
   }
 
