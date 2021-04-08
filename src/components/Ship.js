@@ -14,7 +14,6 @@ const Piece = styled.div`
 `
 
 const Ship = ({ship, selectShip}) => {
-  console.log(ship.rotation)
 
   return (
     <Container 

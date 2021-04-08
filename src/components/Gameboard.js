@@ -36,40 +36,49 @@ const Gameboard = () => {
   const [playerShips, setPlayerShips] = useState(createShips())
   const [selectedShip, setSelectedShip] = useState(playerShips[0])
 
- const placeShip = (column, cell, ship) => {
-  let newBoard = playerBoard
-  let newColumn = newBoard.columns[column]
-  const startIndex = newColumn.indexOf(cell)
-  const cellsToFill = newColumn.slice(startIndex, startIndex + ship.pieces.length)
-  if (cellsToFill.length !== ship.pieces.length) { 
-    return
-  } else {
-      cellsToFill.forEach((cell, index) => {
-      let newCell = cell
-      
-      newCell = {
-        ...newCell,
-        shipPiece: ship.pieces[index]
-      }
-      
-      newColumn.splice(startIndex + index, 1, newCell)
-      })
+  const replaceCell = (column, cell, ship, index, startIndex) => {
+    let newCell = cell
+        
+    newCell = {
+      ...newCell,
+      shipPiece: ship.pieces[index]
+    }
+    
+    column.splice(startIndex + index, 1, newCell)
+  }
 
-      newBoard = {
-        columns: {
-          ...newBoard.columns,
-          [column]: newColumn
+  const placeShip = (column, cell, ship) => {
+    let newBoard = playerBoard
+    let newColumn = newBoard.columns[column]
+    const startIndex = newColumn.indexOf(cell)
+    if (ship.rotation === 'vertical') {
+      const cellsToFill = newColumn.slice(startIndex, startIndex + ship.pieces.length)
+      if (cellsToFill.length !== ship.pieces.length) {
+        return
+      } else {
+        cellsToFill.forEach((cell, index) => {
+          replaceCell(newColumn, cell, ship, index, startIndex)
+        })
+
+        newBoard = {
+          columns: {
+            ...newBoard.columns,
+            [column]: newColumn
+          }
         }
+        setPlayerBoard(newBoard)
+        removeFromShipyard(ship)
       }
-      setPlayerBoard(newBoard)
-      removeFromShipyard()
+    } else {
+      console.log(newColumn, startIndex, cell)
     }
   }
 
- const removeFromShipyard =  () => {
+ const removeFromShipyard = (ship) => {
   const newShips = playerShips.slice()
-  newShips.splice(newShips.indexOf(selectedShip), 1)
+  newShips.splice(newShips.indexOf(ship), 1)
   setPlayerShips(newShips)
+  newShips.length > 0 ? setSelectedShip(newShips[0]) : setSelectedShip({})
  }
 
  const selectShip = (ship) => {
