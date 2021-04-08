@@ -44,7 +44,7 @@ const Gameboard = () => {
       shipPiece: ship.pieces[index === undefined ? startIndex : index]
     }
     
-    column.splice(startIndex + index, 1, newCell)
+    column.splice(index === undefined ? startIndex : startIndex + index, 1, newCell)
   }
 
   const placeShip = (column, cell, ship) => {
@@ -70,7 +70,6 @@ const Gameboard = () => {
         removeFromShipyard(ship)
       }
     } else {
-      //console.log(newColumn, startIndex, cell)
       let columnsToFill = Object.keys(newBoard.columns)
       columnsToFill = columnsToFill.splice(columnsToFill.indexOf(column), ship.pieces.length)
       if (columnsToFill.length !== ship.pieces.length) { return }
