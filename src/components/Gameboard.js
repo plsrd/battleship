@@ -85,7 +85,7 @@ const Gameboard = () => {
   }
   newShips.splice(newShips.indexOf(selectedShip), 1, newShip)
   setPlayerShips(newShips)
-  setSelectedShip(playerShips[0])
+  setSelectedShip(newShip)
  }  
 
 
