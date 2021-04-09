@@ -120,7 +120,7 @@ const Gameboard = () => {
     setSelectedShip(newShip)
   }
 
-  const getHoveredCells = (cell) => {
+  const handleHover = (cell, update) => {
     if (selectedShip.rotation === 'vertical') {
       let newColumn = playerBoard.columns[cell.id[0]]
       const columnLength = newColumn.slice(newColumn.indexOf(cell)).length
@@ -136,7 +136,7 @@ const Gameboard = () => {
       cellsToHover.forEach(oldCell => {
         let newCell = {
           ...oldCell,
-          isHovering: true
+          isHovering: update === 'add' ? true : false
         }
         newColumn.splice(newColumn.indexOf(oldCell), 1, newCell)
       })
@@ -161,7 +161,7 @@ const Gameboard = () => {
             key={column}
             selectedShip={selectedShip}
             placeShip={placeShip}
-            getHoveredCells={getHoveredCells}
+            handleHover={handleHover}
           />
           ))}
       </ColumnContainer>

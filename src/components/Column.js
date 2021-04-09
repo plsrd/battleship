@@ -8,7 +8,7 @@ const Container = styled.div`
   flex-direction: column;
 `
 
-const Column = ({column, selectedShip, placeShip, getHoveredCells}) => {
+const Column = ({column, selectedShip, placeShip, handleHover}) => {
   return (
     <Container >
       {column.map(cell => 
@@ -17,7 +17,7 @@ const Column = ({column, selectedShip, placeShip, getHoveredCells}) => {
           key={cell.id}
           selectedShip={selectedShip}
           placeShip={placeShip}
-          getHoveredCells={getHoveredCells}
+          handleHover={handleHover}
         />)}
     </Container>
   )

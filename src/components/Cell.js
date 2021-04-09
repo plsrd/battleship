@@ -17,12 +17,13 @@ const Container = styled.div`
   }} 
 `
 
-const Cell = ({cell, selectedShip, placeShip, getHoveredCells }) => {
+const Cell = ({cell, selectedShip, placeShip, handleHover }) => {
   return (
     <Container
       onClick={() => placeShip(cell.id[0], cell, selectedShip)}
       hasShip={cell.shipPiece !== ''}
-      onMouseEnter={() => getHoveredCells(cell)}
+      onMouseEnter={() => handleHover(cell, 'add')}
+      onMouseLeave={() => handleHover(cell, 'remove')}
       isHovering={cell.isHovering}
     >
       {cell.id}
