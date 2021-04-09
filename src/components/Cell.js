@@ -6,14 +6,24 @@ const Container = styled.div`
   width: 40px;
   border: 1px solid lightgrey;
   border-radius: 10px;
-  background-color: ${props => props.hasShip ? 'lightgreen' : 'white'}
+  background-color: ${({hasShip, isHovering}) => {
+    if(hasShip && isHovering) {
+      return 'pink'
+    } else if (hasShip && !isHovering) {
+      return 'lightgreen'
+    } else if (isHovering) {
+      return 'lightgrey'
+    }
+  }} 
 `
 
-const Cell = ({cell, selectedShip, placeShip}) => {
+const Cell = ({cell, selectedShip, placeShip, getHoveredCells }) => {
   return (
     <Container
       onClick={() => placeShip(cell.id[0], cell, selectedShip)}
       hasShip={cell.shipPiece !== ''}
+      onMouseEnter={() => getHoveredCells(cell)}
+      isHovering={cell.isHovering}
     >
       {cell.id}
     </Container>

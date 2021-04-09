@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 import createBoard from '../utils/gameboardFactory'
@@ -51,28 +51,32 @@ const Gameboard = () => {
     let newBoard = playerBoard
     let newColumn = newBoard.columns[column]
     const startIndex = newColumn.indexOf(cell)
+
     if (ship.rotation === 'vertical') {
       const cellsToFill = newColumn.slice(startIndex, startIndex + ship.pieces.length)
-      if (cellsToFill.length !== ship.pieces.length) {
-        return
-      } else {
-        cellsToFill.forEach((cell, index) => {
-          replaceCell(newColumn, cell, ship, startIndex, index)
-        })
 
-        newBoard = {
-          columns: {
-            ...newBoard.columns,
-            [column]: newColumn
-          }
+      if (cellsToFill.length !== ship.pieces.length) { return } 
+
+      cellsToFill.forEach((cell, index) => {
+        replaceCell(newColumn, cell, ship, startIndex, index)
+      })
+
+      newBoard = {
+        columns: {
+          ...newBoard.columns,
+          [column]: newColumn
         }
-        setPlayerBoard(newBoard)
-        removeFromShipyard(ship)
       }
+
+      setPlayerBoard(newBoard)
+      removeFromShipyard(ship)
+      
     } else {
       let columnsToFill = Object.keys(newBoard.columns)
       columnsToFill = columnsToFill.splice(columnsToFill.indexOf(column), ship.pieces.length)
+
       if (columnsToFill.length !== ship.pieces.length) { return }
+
       columnsToFill.forEach(col => {
         newColumn = newBoard.columns[col]
         replaceCell(newColumn, newBoard.columns[col][startIndex], ship, startIndex)
@@ -84,33 +88,68 @@ const Gameboard = () => {
           }
         }
       })
+
       setPlayerBoard(newBoard)
       removeFromShipyard(ship)
     }
   }
 
- const removeFromShipyard = (ship) => {
-  const newShips = playerShips.slice()
-  newShips.splice(newShips.indexOf(ship), 1)
-  setPlayerShips(newShips)
-  newShips.length > 0 ? setSelectedShip(newShips[0]) : setSelectedShip({})
- }
-
- const selectShip = (ship) => {
-   setSelectedShip(ship)
- }
-
- const rotateShip = () => {
-  let newShips = playerShips
-  let newShip = selectedShip
-  newShip = {
-    ...newShip,
-    rotation: newShip.rotation === 'vertical' ? 'horizontal' : 'vertical'
+  const removeFromShipyard = (ship) => {
+    const newShips = playerShips.slice()
+    newShips.splice(newShips.indexOf(ship), 1)
+    setPlayerShips(newShips)
+    newShips.length > 0 ? setSelectedShip(newShips[0]) : setSelectedShip({})
   }
-  newShips.splice(newShips.indexOf(selectedShip), 1, newShip)
-  setPlayerShips(newShips)
-  setSelectedShip(newShip)
- }  
+
+  const selectShip = (ship) => {
+    setSelectedShip(ship)
+  }
+
+  const rotateShip = () => {
+    let newShips = playerShips
+    let newShip = selectedShip
+
+    newShip = {
+      ...newShip,
+      rotation: newShip.rotation === 'vertical' ? 'horizontal' : 'vertical'
+    }
+
+    newShips.splice(newShips.indexOf(selectedShip), 1, newShip)
+
+    setPlayerShips(newShips)
+    setSelectedShip(newShip)
+  }
+
+  const getHoveredCells = (cell) => {
+    if (selectedShip.rotation === 'vertical') {
+      let newColumn = playerBoard.columns[cell.id[0]]
+      const columnLength = newColumn.slice(newColumn.indexOf(cell)).length
+      const sliceLength = selectedShip.pieces.length
+
+      const length = columnLength > sliceLength 
+      ? sliceLength 
+      : columnLength < sliceLength 
+      ? columnLength 
+      : sliceLength
+
+      const cellsToHover = newColumn.slice(newColumn.indexOf(cell), newColumn.indexOf(cell) + length)
+      cellsToHover.forEach(oldCell => {
+        let newCell = {
+          ...oldCell,
+          isHovering: true
+        }
+        newColumn.splice(newColumn.indexOf(oldCell), 1, newCell)
+      })
+      let newBoard = {
+        columns: {
+          ...playerBoard.columns,
+          [cell.id[0]]: newColumn
+        }
+      }
+
+      setPlayerBoard(newBoard)
+    }
+  }
 
 
   return (
@@ -122,6 +161,7 @@ const Gameboard = () => {
             key={column}
             selectedShip={selectedShip}
             placeShip={placeShip}
+            getHoveredCells={getHoveredCells}
           />
           ))}
       </ColumnContainer>

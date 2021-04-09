@@ -7,6 +7,7 @@ const board = () => {
           {
             id: `${id}${i}`,
             shipPiece:'',
+            isHovering: false
           }
         )
       }
