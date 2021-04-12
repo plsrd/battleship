@@ -35,7 +35,6 @@ const Gameboard = () => {
   const [playerBoard, setPlayerBoard] = useState(createBoard())
   const [playerShips, setPlayerShips] = useState(createShips())
   const [selectedShip, setSelectedShip] = useState(playerShips[0])
-  const [prevHover, setPrevHover] = useState([])
 
   const replaceCell = (column, cell, ship, startIndex, index) => {
     let newCell = cell
@@ -51,7 +50,7 @@ const Gameboard = () => {
   const placeShip = (column, cell, ship) => {
     let newBoard = playerBoard
     let newColumn = newBoard.columns[column]
-    const startIndex = newColumn.indexOf(cell)
+    const startIndex = newColumn.findIndex(prevCell => prevCell.id === cell.id)
 
     if (ship.rotation === 'vertical') {
       const cellsToFill = newColumn.slice(startIndex, startIndex + ship.pieces.length)
@@ -122,14 +121,13 @@ const Gameboard = () => {
   }
 
   const handleHover = (cell, update) => {
+    let newBoard = playerBoard
+
     if (selectedShip.rotation === 'vertical') {
       let newColumn = playerBoard.columns[cell.id[0]]
       const index = newColumn.findIndex(prevCell => prevCell.id === cell.id)
-      const sliceLength = selectedShip.pieces.length
+      const cellsToHover = newColumn.slice(index, index + selectedShip.pieces.length)
 
-      const cellsToHover = newColumn.slice(index, index + sliceLength)
-
-      console.log(index, cellsToHover)
       cellsToHover.forEach(oldCell => {
         let newCell = {
           ...oldCell,
@@ -137,13 +135,37 @@ const Gameboard = () => {
         }
         newColumn.splice(newColumn.indexOf(oldCell), 1, newCell)
       })
-      let newBoard = {
+
+      newBoard = {
         columns: {
           ...playerBoard.columns,
           [cell.id[0]]: newColumn
         }
       }
-      //setPrevHover(cellsToHover)
+      setPlayerBoard(newBoard)
+    } else {
+      let columns = Object.keys(newBoard.columns)
+      const startIndex = columns.indexOf(cell.id[0])
+      const cellIndex = newBoard.columns[cell.id[0]].findIndex(prevCell => prevCell.id === cell.id)
+      const columnsToHover = columns.slice(startIndex, startIndex + selectedShip.pieces.length)
+      columnsToHover.forEach(col => {
+        let newColumn = newBoard.columns[col]
+        let newCell = newColumn[cellIndex]
+
+        newCell = {
+          ...newCell,
+          isHovering: update === 'add' ? true : false
+        }
+
+        newColumn.splice(cellIndex, 1, newCell)
+        
+        newBoard = {
+          columns: {
+            ...newBoard.columns,
+            [col]: newColumn
+          }
+        }
+      })
       setPlayerBoard(newBoard)
     }
   }

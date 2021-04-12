@@ -23,7 +23,7 @@ const Cell = ({cell, selectedShip, placeShip, handleHover }) => {
       onClick={() => placeShip(cell.id[0], cell, selectedShip)}
       hasShip={cell.shipPiece !== ''}
       onMouseEnter={() => handleHover(cell, 'add')}
-      onMouseLeave={() => handleHover(cell, 'remove')}
+      onMouseLeave={() => handleHover(cell)}
       isHovering={cell.isHovering}
     >
       {cell.id}
