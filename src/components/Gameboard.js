@@ -35,6 +35,7 @@ const Gameboard = () => {
   const [playerBoard, setPlayerBoard] = useState(createBoard())
   const [playerShips, setPlayerShips] = useState(createShips())
   const [selectedShip, setSelectedShip] = useState(playerShips[0])
+  const [shipFits, setShipFits] = useState(true)
 
   const replaceCell = (column, cell, ship, startIndex, index) => {
     let newCell = cell
@@ -91,6 +92,7 @@ const Gameboard = () => {
 
       setPlayerBoard(newBoard)
       removeFromShipyard(ship)
+      setShipFits(true)
     }
   }
 
@@ -128,6 +130,12 @@ const Gameboard = () => {
       const index = newColumn.findIndex(prevCell => prevCell.id === cell.id)
       const cellsToHover = newColumn.slice(index, index + selectedShip.pieces.length)
 
+      if (cellsToHover.filter(cell => cell.shipPiece === '').length !== selectedShip.pieces.length) {
+        setShipFits(false)
+      } else {
+        setShipFits(true)
+      }
+
       cellsToHover.forEach(oldCell => {
         let newCell = {
           ...oldCell,
@@ -143,11 +151,19 @@ const Gameboard = () => {
         }
       }
       setPlayerBoard(newBoard)
+
     } else {
       let columns = Object.keys(newBoard.columns)
       const startIndex = columns.indexOf(cell.id[0])
       const cellIndex = newBoard.columns[cell.id[0]].findIndex(prevCell => prevCell.id === cell.id)
       const columnsToHover = columns.slice(startIndex, startIndex + selectedShip.pieces.length)
+
+      if (columnsToHover.filter(col => newBoard.columns[col][cellIndex].shipPiece === '').length !== selectedShip.pieces.length) {
+        setShipFits(false)
+      } else {
+        setShipFits(true)
+      }
+
       columnsToHover.forEach(col => {
         let newColumn = newBoard.columns[col]
         let newCell = newColumn[cellIndex]
@@ -180,6 +196,7 @@ const Gameboard = () => {
             selectedShip={selectedShip}
             placeShip={placeShip}
             handleHover={handleHover}
+            shipFits={shipFits}
           />
           ))}
       </ColumnContainer>

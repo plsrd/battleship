@@ -8,19 +8,25 @@ const Container = styled.div`
   flex-direction: column;
 `
 
-const Column = ({column, selectedShip, placeShip, handleHover}) => {
-  return (
-    <Container >
-      {column.map(cell => 
-        <Cell 
-          cell={cell} 
-          key={cell.id}
-          selectedShip={selectedShip}
-          placeShip={placeShip}
-          handleHover={handleHover}
-        />)}
-    </Container>
-  )
+const Column = ({
+  column, 
+  selectedShip, 
+  placeShip, 
+  handleHover,
+  shipFits}) => {
+    return (
+      <Container >
+        {column.map(cell => 
+          <Cell 
+            cell={cell} 
+            key={cell.id}
+            selectedShip={selectedShip}
+            placeShip={placeShip}
+            handleHover={handleHover}
+            shipFits={shipFits}
+          />)}
+      </Container>
+    )
 }
 
 export default Column 
