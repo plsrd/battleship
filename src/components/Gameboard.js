@@ -37,68 +37,64 @@ const Gameboard = () => {
   const [selectedShip, setSelectedShip] = useState(playerShips[0])
   const [shipFits, setShipFits] = useState(true)
 
-  const replaceCell = (column, cell, ship, startIndex, index) => {
-    let newCell = cell
-        
-    newCell = {
-      ...newCell,
-      shipPiece: ship.pieces[index === undefined ? startIndex : index]
+  const replaceCell = (column, cell, startIndex, index) => {    
+    let newCell = {
+      ...cell,
+      shipPiece: selectedShip.pieces[index === undefined ? startIndex : index]
     }
     
     column.splice(index === undefined ? startIndex : startIndex + index, 1, newCell)
   }
 
-  const placeShip = (column, cell, ship) => {
+  const placeShip = (cell) => {
     let newBoard = playerBoard
-    let newColumn = newBoard.columns[column]
+    let newColumn = newBoard.columns[cell.id[0]]
     const startIndex = newColumn.findIndex(prevCell => prevCell.id === cell.id)
+    const { pieces } = selectedShip
 
-    if (ship.rotation === 'vertical') {
-      const cellsToFill = newColumn.slice(startIndex, startIndex + ship.pieces.length)
+    if (selectedShip.rotation === 'vertical') {
+      const cellsToFill = newColumn.slice(startIndex, startIndex + pieces.length)
 
-      if (cellsToFill.filter(cell => cell.shipPiece === '').length !== ship.pieces.length) { return } 
+      if (cellsToFill.filter(cell => cell.shipPiece === '').length !== pieces.length) { return } 
 
       cellsToFill.forEach((cell, index) => {
-        replaceCell(newColumn, cell, ship, startIndex, index)
+        replaceCell(newColumn, cell, startIndex, index)
       })
 
       newBoard = {
         columns: {
           ...newBoard.columns,
-          [column]: newColumn
+          [cell.id[0]]: newColumn
         }
       }
-
-      setPlayerBoard(newBoard)
-      removeFromShipyard(ship)
       
     } else {
       let columnsToFill = Object.keys(newBoard.columns)
-      columnsToFill = columnsToFill.splice(columnsToFill.indexOf(column), ship.pieces.length)
+      columnsToFill = columnsToFill.splice(columnsToFill.indexOf(cell.id[0]), pieces.length)
 
-      if (columnsToFill.filter(col => newBoard.columns[col][startIndex].shipPiece === '').length !== ship.pieces.length) { return }
+      if (columnsToFill.filter(column => newBoard.columns[column][startIndex].shipPiece === '').length !== pieces.length) { return }
 
-      columnsToFill.forEach(col => {
-        newColumn = newBoard.columns[col]
-        replaceCell(newColumn, newBoard.columns[col][startIndex], ship, startIndex)
+      columnsToFill.forEach(column => {
+        newColumn = newBoard.columns[column]
+        replaceCell(newColumn, newBoard.columns[column][startIndex], startIndex)
 
         newBoard = {
           columns: {
             ...newBoard.columns,
-            [col]: newColumn
+            [column]: newColumn
           }
         }
       })
-
-      setPlayerBoard(newBoard)
-      removeFromShipyard(ship)
-      setShipFits(true)
     }
+
+    setPlayerBoard(newBoard)
+    removeFromShipyard()
+    setShipFits(true)
   }
 
-  const removeFromShipyard = (ship) => {
+  const removeFromShipyard = () => {
     const newShips = playerShips.slice()
-    newShips.splice(newShips.indexOf(ship), 1)
+    newShips.splice(newShips.indexOf(selectedShip), 1)
     setPlayerShips(newShips)
     newShips.length > 0 ? setSelectedShip(newShips[0]) : setSelectedShip({})
   }
@@ -202,17 +198,21 @@ const Gameboard = () => {
           />
           ))}
       </ColumnContainer>
-      <Shipyard ships={playerShips} selectShip={selectShip}/>
-      <InfoContainer>
-        <div>
-        Current Selection:
-        {selectedShip.id}
-        </div>
-        <RotateButton onClick={() => rotateShip()}>
-          rotate
-        </RotateButton>
-        
-      </InfoContainer>
+      {playerShips.length > 0 ? (
+        <>
+          <Shipyard ships={playerShips} selectShip={selectShip}/>
+          <InfoContainer>
+            <div>
+            Current Selection:
+            {selectedShip.id}
+            </div>
+            <RotateButton onClick={() => rotateShip()}>
+            rotate
+            </RotateButton>
+          </InfoContainer>
+        </>
+      )
+      : (<button>Start</button>)}
     </Container>
   )
 

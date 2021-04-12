@@ -20,7 +20,6 @@ const Column = ({
           <Cell 
             cell={cell} 
             key={cell.id}
-            selectedShip={selectedShip}
             placeShip={placeShip}
             handleHover={handleHover}
             shipFits={shipFits}

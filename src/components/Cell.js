@@ -18,15 +18,13 @@ const Cell = ({
   shipFits }) => {
     return (
       <Container
-        onClick={() => placeShip(cell.id[0], cell, selectedShip)}
+        onClick={() => placeShip(cell)}
         hasShip={cell.shipPiece !== ''}
         onMouseEnter={() => handleHover(cell, 'add')}
         onMouseLeave={() => handleHover(cell)}
         isHovering={cell.isHovering}
         shipFits={shipFits}
-      >
-        {cell.id}
-      </Container>
+      />
     )
 }
 
