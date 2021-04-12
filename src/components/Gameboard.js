@@ -55,7 +55,7 @@ const Gameboard = () => {
     if (ship.rotation === 'vertical') {
       const cellsToFill = newColumn.slice(startIndex, startIndex + ship.pieces.length)
 
-      if (cellsToFill.length !== ship.pieces.length) { return } 
+      if (cellsToFill.filter(cell => cell.shipPiece === '').length !== ship.pieces.length) { return } 
 
       cellsToFill.forEach((cell, index) => {
         replaceCell(newColumn, cell, ship, startIndex, index)
@@ -75,7 +75,7 @@ const Gameboard = () => {
       let columnsToFill = Object.keys(newBoard.columns)
       columnsToFill = columnsToFill.splice(columnsToFill.indexOf(column), ship.pieces.length)
 
-      if (columnsToFill.length !== ship.pieces.length) { return }
+      if (columnsToFill.filter(col => newBoard.columns[col][startIndex].shipPiece === '').length !== ship.pieces.length) { return }
 
       columnsToFill.forEach(col => {
         newColumn = newBoard.columns[col]
