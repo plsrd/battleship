@@ -35,6 +35,7 @@ const Gameboard = () => {
   const [playerBoard, setPlayerBoard] = useState(createBoard())
   const [playerShips, setPlayerShips] = useState(createShips())
   const [selectedShip, setSelectedShip] = useState(playerShips[0])
+  const [prevHover, setPrevHover] = useState([])
 
   const replaceCell = (column, cell, ship, startIndex, index) => {
     let newCell = cell
@@ -123,16 +124,12 @@ const Gameboard = () => {
   const handleHover = (cell, update) => {
     if (selectedShip.rotation === 'vertical') {
       let newColumn = playerBoard.columns[cell.id[0]]
-      const columnLength = newColumn.slice(newColumn.indexOf(cell)).length
+      const index = newColumn.findIndex(prevCell => prevCell.id === cell.id)
       const sliceLength = selectedShip.pieces.length
 
-      const length = columnLength > sliceLength 
-      ? sliceLength 
-      : columnLength < sliceLength 
-      ? columnLength 
-      : sliceLength
+      const cellsToHover = newColumn.slice(index, index + sliceLength)
 
-      const cellsToHover = newColumn.slice(newColumn.indexOf(cell), newColumn.indexOf(cell) + length)
+      console.log(index, cellsToHover)
       cellsToHover.forEach(oldCell => {
         let newCell = {
           ...oldCell,
@@ -146,11 +143,10 @@ const Gameboard = () => {
           [cell.id[0]]: newColumn
         }
       }
-
+      //setPrevHover(cellsToHover)
       setPlayerBoard(newBoard)
     }
   }
-
 
   return (
     <Container>
