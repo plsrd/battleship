@@ -7,9 +7,12 @@ import Column from "./Column"
 import Shipyard from './Shipyard'
 
 const Container = styled.div`
+  width: 900px;
+  margin: 0 auto;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
+  align-items: center
 `
 
 const ColumnContainer = styled.div`
@@ -22,7 +25,7 @@ const InfoContainer = styled.div`
   flex-direction: row;
 `
 
-const RotateButton = styled.button`
+const Button = styled.button`
   outline: none;
   height: 30px;
   border-radius: 10px;
@@ -202,13 +205,13 @@ const Gameboard = () => {
             Current Selection:
             {selectedShip.id}
             </div>
-            <RotateButton onClick={() => rotateShip()}>
+            <Button onClick={() => rotateShip()}>
             rotate
-            </RotateButton>
+            </Button>
           </InfoContainer>
         </>
       )
-      : (<button>Start</button>)}
+      : (<Button>Start</Button>)}
     </Container>
   )
 }

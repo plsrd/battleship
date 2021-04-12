@@ -6,10 +6,9 @@ import Ship from './Ship'
 const ShipContainer = styled.div`
   display: flex;
   flex-direction: row;
-  width: 500px;
+  justify-content: space-between;
+  width: 600px;
   height: 150px;
-  border: 1px solid lightgrey;
-  margin-left: 100px;
 `
 
 const Shipyard = ({ships, selectShip}) => {
