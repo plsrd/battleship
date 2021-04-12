@@ -99,10 +99,6 @@ const Gameboard = () => {
     newShips.length > 0 ? setSelectedShip(newShips[0]) : setSelectedShip({})
   }
 
-  const selectShip = (ship) => {
-    setSelectedShip(ship)
-  }
-
   const rotateShip = () => {
     let newShips = playerShips
     let newShip = selectedShip
@@ -200,7 +196,7 @@ const Gameboard = () => {
       </ColumnContainer>
       {playerShips.length > 0 ? (
         <>
-          <Shipyard ships={playerShips} selectShip={selectShip}/>
+          <Shipyard ships={playerShips} selectShip={setSelectedShip}/>
           <InfoContainer>
             <div>
             Current Selection:
@@ -215,7 +211,6 @@ const Gameboard = () => {
       : (<button>Start</button>)}
     </Container>
   )
-
 }
 
 export default Gameboard
