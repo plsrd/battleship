@@ -126,6 +126,7 @@ const Gameboard = () => {
     let newBoard = playerBoard
 
     if (selectedShip.rotation === 'vertical') {
+      if (playerShips.length === 0) return
       let newColumn = playerBoard.columns[cell.id[0]]
       const index = newColumn.findIndex(prevCell => prevCell.id === cell.id)
       const cellsToHover = newColumn.slice(index, index + selectedShip.pieces.length)
@@ -153,6 +154,7 @@ const Gameboard = () => {
       setPlayerBoard(newBoard)
 
     } else {
+      if (playerShips.length === 0) return
       let columns = Object.keys(newBoard.columns)
       const startIndex = columns.indexOf(cell.id[0])
       const cellIndex = newBoard.columns[cell.id[0]].findIndex(prevCell => prevCell.id === cell.id)
