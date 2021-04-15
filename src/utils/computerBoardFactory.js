@@ -1,13 +1,23 @@
 import createBoard from './gameboardFactory'
-import shipFactory from './shipFactory'
+import createShips from './shipFactory'
 
 const getRandomNumber = (length) => {
   return Math.round(Math.random() * (9 - length))
 }
 
+const rotateRandomShips = (ships) => {
+  const rotatedShips =  ships.map(
+    ship => {
+      Math.round(Math.random()) === 0 ? ship.rotation = 'vertical' : ship.rotation = 'horizontal'
+      return ship
+    })
+    console.log(rotatedShips)
+  return rotatedShips
+}
+
 const computerBoard = () => {
   let computerBoard =  createBoard()
-  let ships = shipFactory()
+  let ships = rotateRandomShips(createShips())
 
   const getCellsToFill = (column, length) => {
     const startIndex = getRandomNumber(length)
@@ -22,7 +32,6 @@ const computerBoard = () => {
       selectedCells.forEach(cell => {
         if (cell.shipPiece !== '') { shipFits = false}
       }) 
-
       shipFits ? placeShip(ship, selectedCells) : getValidPlacement(ship)
     }
   }
