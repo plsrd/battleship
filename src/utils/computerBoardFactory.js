@@ -1,6 +1,14 @@
 import createBoard from './gameboardFactory'
 import shipFactory from './shipFactory'
 
+const getRandomNumber = (length) => {
+  return Math.round(Math.random() * (9 - length))
+}
+
+const getCellsToFill = (column, length) => {
+  const startIndex = getRandomNumber(length)
+  return column.slice(startIndex, startIndex + length)
+}
 
 const computerBoard = () => {
   let computerBoard =  createBoard()
@@ -8,19 +16,13 @@ const computerBoard = () => {
 
   const { columns } = computerBoard
 
-  const getRandomNumber = () => {
-    return Math.round(Math.random() * 9)
-  }
-
   ships.forEach(ship => {
-    
-    let selectedColumn = columns[Object.keys(columns)[getRandomNumber()]]
+    let selectedColumn = columns[Object.keys(columns)[getRandomNumber(0)]]
 
-    console.log(selectedColumn)
+    const cellsToFill = getCellsToFill(selectedColumn, ship.pieces.length)
+    console.log(cellsToFill)
 
-    //let cellsToFill = selectedColumn.slice(Math)
   })
-
 
 }
 
