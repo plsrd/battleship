@@ -15,21 +15,19 @@ const computerBoard = () => {
   }
   
   const getValidPlacement = (ship) => {
-    let selectedColumn = computerBoard.columns[Object.keys(computerBoard.columns)[getRandomNumber(0)]]
-    let shipFits = true
-    const selectedCells = getCellsToFill(selectedColumn, ship.pieces.length)
-    selectedCells.forEach(cell => {
-      if (cell.shipPiece !== '') { shipFits = false}
-    }) 
-    if (shipFits) {
-      placeShip(ship, selectedCells)
-    } else {
-      getValidPlacement(ship)
+    if (ship.rotation === 'vertical') {
+      let selectedColumn = computerBoard.columns[Object.keys(computerBoard.columns)[getRandomNumber(0)]]
+      let shipFits = true
+      const selectedCells = getCellsToFill(selectedColumn, ship.pieces.length)
+      selectedCells.forEach(cell => {
+        if (cell.shipPiece !== '') { shipFits = false}
+      }) 
+
+      shipFits ? placeShip(ship, selectedCells) : getValidPlacement(ship)
     }
   }
   
   const placeShip = (ship, cells) => {
-    console.log(ship, cells)
     const columnId = [cells[0].id[0]]
     let newColumn = computerBoard.columns[columnId].slice()
     ship.pieces.forEach((piece, index) => {
