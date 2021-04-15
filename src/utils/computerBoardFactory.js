@@ -11,7 +11,6 @@ const rotateRandomShips = (ships) => {
       Math.round(Math.random()) === 0 ? ship.rotation = 'vertical' : ship.rotation = 'horizontal'
       return ship
     })
-    console.log(rotatedShips)
   return rotatedShips
 }
 
@@ -19,39 +18,68 @@ const computerBoard = () => {
   let computerBoard =  createBoard()
   let ships = rotateRandomShips(createShips())
 
-  const getCellsToFill = (column, length) => {
-    const startIndex = getRandomNumber(length)
-    return column.slice(startIndex, startIndex + length)
-  }
-  
-  const getValidPlacement = (ship) => {
-    if (ship.rotation === 'vertical') {
-      let selectedColumn = computerBoard.columns[Object.keys(computerBoard.columns)[getRandomNumber(0)]]
-      let shipFits = true
-      const selectedCells = getCellsToFill(selectedColumn, ship.pieces.length)
-      selectedCells.forEach(cell => {
-        if (cell.shipPiece !== '') { shipFits = false}
-      }) 
-      shipFits ? placeShip(ship, selectedCells) : getValidPlacement(ship)
+  const getCellsToFill = (column, ship) => {
+    const startIndex = getRandomNumber(ship.pieces.length)
+    if(ship.rotation === 'vertical') { 
+      return column.slice(startIndex, startIndex + ship.pieces.length)
+    } else {
+      let columns = Object.keys(computerBoard.columns)
+      columns = columns.splice(columns.indexOf(column), ship.pieces.length)
+      return ship.pieces.map((piece, index) => {
+        return computerBoard.columns[columns[index]].find(cell => cell.id === `${columns[index]}${startIndex + 1}`)
+      })
     }
   }
   
-  const placeShip = (ship, cells) => {
-    const columnId = [cells[0].id[0]]
-    let newColumn = computerBoard.columns[columnId].slice()
-    ship.pieces.forEach((piece, index) => {
-      let newCell = {
-        ...cells[index],
-        shipPiece: piece
-      }
-      newColumn.splice(newColumn.findIndex(cell => cell.id === cells[index].id), 1, newCell)
-    })
+  const getValidPlacement = (ship) => {
+    let shipFits = true
+    const selectedColumn = ship.rotation === 'vertical' 
+    ? computerBoard.columns[Object.keys(computerBoard.columns)[getRandomNumber(0)]] 
+    : Object.keys(computerBoard.columns)[getRandomNumber(ship.pieces.length)]
 
-    computerBoard = {
-      columns: {
-        ...computerBoard.columns,
-        [columnId]: newColumn
+    const selectedCells = getCellsToFill(selectedColumn, ship)
+    selectedCells.forEach(cell => {
+      if (cell.shipPiece !== '') { shipFits = false}
+    }) 
+    shipFits ? placeShip(ship, selectedCells) : getValidPlacement(ship)
+  }
+  
+  const placeShip = (ship, cells) => {
+    if (ship.rotation === 'vertical') {
+      const columnId = [cells[0].id[0]]
+      let newColumn = computerBoard.columns[columnId].slice()
+      ship.pieces.forEach((piece, index) => {
+        let newCell = {
+          ...cells[index],
+          shipPiece: piece
+        }
+        newColumn.splice(newColumn.findIndex(cell => cell.id === cells[index].id), 1, newCell)
+      })
+
+      computerBoard = {
+        columns: {
+          ...computerBoard.columns,
+          [columnId]: newColumn
+        }
       }
+    } else {
+      const columnIndex = cells[0].id.slice(1) - 1
+      ship.pieces.forEach((piece, index) => {
+        let column = computerBoard.columns[cells[index].id[0]]
+        let newCell = {
+          ...column[columnIndex],
+          shipPiece: piece
+        }
+
+        column.splice(column.findIndex(cell => cell.id === newCell.id), 1, newCell)
+
+        computerBoard = {
+          columns: {
+            ...computerBoard.columns,
+            [cells[index].id[0]]: column
+          }
+        }
+      })
     }
   }
 

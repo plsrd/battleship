@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import createBoard from '../utils/gameboardFactory'
 import createShips from '../utils/shipFactory'
+import createComputerBoard from '../utils/computerBoardFactory'
 import Column from "./Column"
 import Shipyard from './Shipyard'
 
@@ -35,6 +36,7 @@ const Button = styled.button`
 
 
 const Gameboard = () => {
+  const [computerBoard, setComputerBoard] = useState(createComputerBoard())
   const [playerBoard, setPlayerBoard] = useState(createBoard())
   const [playerShips, setPlayerShips] = useState(createShips())
   const [selectedShip, setSelectedShip] = useState(playerShips[0])
@@ -212,6 +214,18 @@ const Gameboard = () => {
         </>
       )
       : (<Button>Start</Button>)}
+      <ColumnContainer>
+        {Object.keys(computerBoard.columns).map(column => (
+          <Column 
+            column={computerBoard.columns[column]} 
+            key={column}
+            selectedShip={selectedShip}
+            placeShip={placeShip}
+            handleHover={handleHover}
+            shipFits={shipFits}
+          />
+          ))}
+      </ColumnContainer>
     </Container>
   )
 }

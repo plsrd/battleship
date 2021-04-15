@@ -14,6 +14,8 @@ const ColumnContainer = styled.div`
 const ComputerBoard = () =>  {
   const [computerBoard, setComputerBoard] = useState(createBoard())
 
+  console.log(computerBoard)
+
   return (
     <ColumnContainer>
       {Object.keys(computerBoard.columns).map(column => (
