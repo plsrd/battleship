@@ -1,11 +1,28 @@
 import React, { useState } from 'react'
+import styled from 'styled-components'
+
 import createBoard from '../utils/computerBoardFactory'
+
+import Column from '../components/Column'
+import Cell from '../components/Cell'
+
+const ColumnContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`
 
 const ComputerBoard = () =>  {
   const [computerBoard, setComputerBoard] = useState(createBoard())
 
   return (
-    <h1>Board</h1>
+    <ColumnContainer>
+      {Object.keys(computerBoard.columns).map(column => (
+          <Column 
+            column={computerBoard.columns[column]} 
+            key={column}
+          />
+      ))}
+    </ColumnContainer>
   )
 }
 
