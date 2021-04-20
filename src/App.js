@@ -1,11 +1,20 @@
-import React from 'react'
-import Gameboard from './components/Gameboard'
+import React, { useState } from 'react'
 
-function App() {
+import createComputerBoard from './utils/computerBoardFactory'
+import createBoard from './utils/gameboardFactory'
+
+import Player from './components/Player'
+
+const App = () => {
+  const [computerBoard, setComputerBoard] = useState(createComputerBoard())
+  const [playerBoard, setPlayerBoard] = useState(createBoard())
 
   return (
     <>
-      <Gameboard />
+      <Player 
+        playerBoard={playerBoard}
+        setPlayerBoard={setPlayerBoard}
+      />
     </>
   );
 }

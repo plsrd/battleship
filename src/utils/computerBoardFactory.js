@@ -22,13 +22,13 @@ const computerBoard = () => {
     const startIndex = getRandomNumber(ship.pieces.length)
     if(ship.rotation === 'vertical') { 
       return column.slice(startIndex, startIndex + ship.pieces.length)
-    } else {
-      let columns = Object.keys(computerBoard.columns)
-      columns = columns.splice(columns.indexOf(column), ship.pieces.length)
-      return ship.pieces.map((piece, index) => {
-        return computerBoard.columns[columns[index]].find(cell => cell.id === `${columns[index]}${startIndex + 1}`)
-      })
     }
+
+    let columns = Object.keys(computerBoard.columns)
+    columns = columns.splice(columns.indexOf(column), ship.pieces.length)
+    return ship.pieces.map((piece, index) => {
+      return computerBoard.columns[columns[index]].find(cell => cell.id === `${columns[index]}${startIndex + 1}`)
+    })
   }
   
   const getValidPlacement = (ship) => {

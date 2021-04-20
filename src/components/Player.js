@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
-import createBoard from '../utils/gameboardFactory'
 import createShips from '../utils/shipFactory'
-import createComputerBoard from '../utils/computerBoardFactory'
-import Column from "./Column"
+
+import Board from './Board'
 import Shipyard from './Shipyard'
 
 const Container = styled.div`
@@ -14,11 +13,6 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center
-`
-
-const ColumnContainer = styled.div`
-  display: flex;
-  flex-direction: row;
 `
 
 const InfoContainer = styled.div`
@@ -35,9 +29,7 @@ const Button = styled.button`
 `
 
 
-const Gameboard = () => {
-  const [computerBoard, setComputerBoard] = useState(createComputerBoard())
-  const [playerBoard, setPlayerBoard] = useState(createBoard())
+const Player = ({playerBoard, setPlayerBoard}) => {
   const [playerShips, setPlayerShips] = useState(createShips())
   const [selectedShip, setSelectedShip] = useState(playerShips[0])
   const [shipFits, setShipFits] = useState(true)
@@ -187,18 +179,13 @@ const Gameboard = () => {
 
   return (
     <Container>
-      <ColumnContainer>
-        {Object.keys(playerBoard.columns).map(column => (
-          <Column 
-            column={playerBoard.columns[column]} 
-            key={column}
-            selectedShip={selectedShip}
-            placeShip={placeShip}
-            handleHover={handleHover}
-            shipFits={shipFits}
-          />
-          ))}
-      </ColumnContainer>
+      <Board 
+        board={playerBoard}
+        selectedShip={selectedShip}
+        placeShip={placeShip}
+        handleHover={handleHover}
+        shipFits={shipFits}
+      />
       {playerShips.length > 0 ? (
         <>
           <Shipyard ships={playerShips} selectShip={setSelectedShip}/>
@@ -214,20 +201,8 @@ const Gameboard = () => {
         </>
       )
       : (<Button>Start</Button>)}
-      <ColumnContainer>
-        {Object.keys(computerBoard.columns).map(column => (
-          <Column 
-            column={computerBoard.columns[column]} 
-            key={column}
-            selectedShip={selectedShip}
-            placeShip={placeShip}
-            handleHover={handleHover}
-            shipFits={shipFits}
-          />
-          ))}
-      </ColumnContainer>
     </Container>
   )
 }
 
-export default Gameboard
+export default Player
