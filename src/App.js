@@ -9,16 +9,27 @@ import Board from "./components/Board"
 const App = () => {
   const [computerBoard, setComputerBoard] = useState(createComputerBoard())
   const [playerBoard, setPlayerBoard] = useState(createBoard())
+  const [gameActive, setGameActive] = useState()
+
 
   return (
     <>
-      <Player 
-        playerBoard={playerBoard}
-        setPlayerBoard={setPlayerBoard}
-      />
-      <Board
-        board={computerBoard}
-      />
+      {!gameActive ? 
+        <Player 
+          playerBoard={playerBoard}
+          setPlayerBoard={setPlayerBoard}
+          startGame={() => setGameActive(true)}
+        />
+      :
+        <>
+          <Board 
+            board={playerBoard}
+          />
+          <Board 
+            board={computerBoard}
+          />
+        </>
+      }
     </>
   );
 }

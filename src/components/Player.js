@@ -29,7 +29,7 @@ const Button = styled.button`
 `
 
 
-const Player = ({playerBoard, setPlayerBoard}) => {
+const Player = ({playerBoard, setPlayerBoard, startGame}) => {
   const [playerShips, setPlayerShips] = useState(createShips())
   const [selectedShip, setSelectedShip] = useState(playerShips[0])
   const [shipFits, setShipFits] = useState(true)
@@ -204,7 +204,9 @@ const Player = ({playerBoard, setPlayerBoard}) => {
           <Board
             board={playerBoard}
           />
-          <Button>
+          <Button
+          onClick={startGame}
+          >
             start
           </Button>
         </Container>
