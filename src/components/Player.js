@@ -178,30 +178,38 @@ const Player = ({playerBoard, setPlayerBoard}) => {
   }
 
   return (
-    <Container>
-      <Board 
-        board={playerBoard}
-        selectedShip={selectedShip}
-        placeShip={placeShip}
-        handleHover={handleHover}
-        shipFits={shipFits}
-      />
-      {playerShips.length > 0 ? (
-        <>
-          <Shipyard ships={playerShips} selectShip={setSelectedShip}/>
-          <InfoContainer>
-            <div>
-            Current Selection:
-            {selectedShip.id}
-            </div>
-            <Button onClick={() => rotateShip()}>
-            rotate
-            </Button>
-          </InfoContainer>
-        </>
-      )
-      : (<Button>Start</Button>)}
-    </Container>
+    <>
+      {playerShips.length > 0 ? 
+        <Container>
+          <Board 
+            board={playerBoard}
+            selectedShip={selectedShip}
+            placeShip={placeShip}
+            handleHover={handleHover}
+            shipFits={shipFits}
+          />
+            <Shipyard ships={playerShips} selectShip={setSelectedShip}/>
+            <InfoContainer>
+              <div>
+              Current Selection:
+              {selectedShip.id}
+              </div>
+              <Button onClick={() => rotateShip()}>
+              rotate
+              </Button>
+            </InfoContainer>
+        </Container>
+      : 
+        <Container>
+          <Board
+            board={playerBoard}
+          />
+          <Button>
+            start
+          </Button>
+        </Container>
+      }
+    </>
   )
 }
 
