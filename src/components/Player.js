@@ -188,12 +188,12 @@ const Player = ({playerBoard, setPlayerBoard}) => {
             handleHover={handleHover}
             shipFits={shipFits}
           />
-            <Shipyard ships={playerShips} selectShip={setSelectedShip}/>
+            <Shipyard 
+              ships={playerShips} 
+              selectShip={setSelectedShip}
+              selectedShip={selectedShip}
+            />
             <InfoContainer>
-              <div>
-              Current Selection:
-              {selectedShip.id}
-              </div>
               <Button onClick={() => rotateShip()}>
               rotate
               </Button>

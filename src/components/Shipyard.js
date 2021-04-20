@@ -11,7 +11,7 @@ const ShipContainer = styled.div`
   height: 150px;
 `
 
-const Shipyard = ({ships, selectShip}) => {
+const Shipyard = ({ships, selectShip, selectedShip}) => {
 
   return (
     <ShipContainer>
@@ -20,6 +20,7 @@ const Shipyard = ({ships, selectShip}) => {
           ship={ships[ship]} 
           key={ships[ship].id}
           selectShip={selectShip}
+          selected={selectedShip.id === ships[ship].id}
         />)}
     </ShipContainer>
   )

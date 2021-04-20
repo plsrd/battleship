@@ -10,11 +10,11 @@ const Piece = styled.div`
   height: 30px;
   width: 30px;
   background-color: lightgreen;
-  border: 1px solid lightgrey;
+  border: 1px solid ${props => props.selected ? 'red' : 'lightgrey'} ;
 `
 
-const Ship = ({ship, selectShip}) => {
-
+const Ship = ({ship, selectShip, selected}) => {
+  console.log(ship, selected)
   return (
     <Container 
       onClick={() => selectShip(ship)}
@@ -23,6 +23,7 @@ const Ship = ({ship, selectShip}) => {
       {ship.pieces.map(piece => 
         <Piece 
           key={piece.id}
+          selected={selected}
         />)}
     </Container>
   )
