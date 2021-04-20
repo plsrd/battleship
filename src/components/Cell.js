@@ -12,19 +12,23 @@ const Container = styled.div`
 
 const Cell = ({
   cell, 
-  selectedShip,
   placeShip, 
   handleHover,
   shipFits }) => {
     return (
-      <Container
-        onClick={() => placeShip(cell)}
-        hasShip={cell.shipPiece !== ''}
-        onMouseEnter={() => handleHover(cell, 'add')}
-        onMouseLeave={() => handleHover(cell)}
-        isHovering={cell.isHovering}
-        shipFits={shipFits}
-      />
+      placeShip !== undefined ?
+        <Container
+          onClick={() => placeShip(cell)}
+          hasShip={cell.shipPiece !== ''}
+          onMouseEnter={() => handleHover(cell, 'add')}
+          onMouseLeave={() => handleHover(cell)}
+          isHovering={cell.isHovering}
+          shipFits={shipFits}
+        />
+      :
+        <Container 
+          hasShip={cell.shipPiece !== ''}
+        />
     )
 }
 

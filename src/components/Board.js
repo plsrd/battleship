@@ -9,21 +9,32 @@ const Container = styled.div`
   flex-direction: row;
 `
 
-const Gameboard = ({board, selectedShip, placeShip, handleHover, shipFits}) => {
-  return (
+const Gameboard = ({
+  board, 
+  selectedShip, 
+  placeShip, 
+  handleHover, 
+  shipFits
+  }) => {
+    return (
       <Container>
         {Object.keys(board.columns).map(column => (
-          <Column 
-            column={board.columns[column]} 
-            key={column}
-            selectedShip={selectedShip}
-            placeShip={placeShip}
-            handleHover={handleHover}
-            shipFits={shipFits}
-          />
+          selectedShip !== undefined ? 
+            <Column 
+              column={board.columns[column]} 
+              key={column}
+              placeShip={placeShip}
+              handleHover={handleHover}
+              shipFits={shipFits}
+            />
+          :
+            <Column 
+              column={board.columns[column]} 
+              key={column}
+            />
           ))}
       </Container>
-  )
+    )
 }
 
 export default Gameboard

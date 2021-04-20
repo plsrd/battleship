@@ -10,21 +10,28 @@ const Container = styled.div`
 
 const Column = ({
   column, 
-  selectedShip, 
   placeShip, 
   handleHover,
   shipFits}) => {
     return (
-      <Container >
-        {column.map(cell => 
-          <Cell 
-            cell={cell} 
-            key={cell.id}
-            placeShip={placeShip}
-            handleHover={handleHover}
-            shipFits={shipFits}
-          />)}
-      </Container>
+        <Container >
+          {column.map(cell => 
+            placeShip !== undefined ?
+              <Cell 
+                cell={cell} 
+                key={cell.id}
+                placeShip={placeShip}
+                handleHover={handleHover}
+                shipFits={shipFits}
+              />
+            : 
+              <Cell
+                cell={cell}
+                key={cell.id} 
+              />
+          )}
+        </Container>
+
     )
 }
 
