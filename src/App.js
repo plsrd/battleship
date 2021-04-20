@@ -4,7 +4,7 @@ import createComputerBoard from './utils/computerBoardFactory'
 import createBoard from './utils/gameboardFactory'
 
 import Player from './components/Player'
-import Board from "./components/Board"
+import Controller from "./components/Controller"
 
 const App = () => {
   const [computerBoard, setComputerBoard] = useState(createComputerBoard())
@@ -21,14 +21,10 @@ const App = () => {
           startGame={() => setGameActive(true)}
         />
       :
-        <>
-          <Board 
-            board={playerBoard}
-          />
-          <Board 
-            board={computerBoard}
-          />
-        </>
+        <Controller
+          playerBoard={playerBoard}
+          computerBoard={computerBoard}
+        />
       }
     </>
   );

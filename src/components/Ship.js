@@ -14,7 +14,6 @@ const Piece = styled.div`
 `
 
 const Ship = ({ship, selectShip, selected}) => {
-  console.log(ship, selected)
   return (
     <Container 
       onClick={() => selectShip(ship)}
