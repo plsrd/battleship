@@ -1,26 +1,34 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Container = styled.div`
+const mainStyle = `
   height: 30px;
   width: 30px;
   border: 1px solid lightgrey;
   border-radius: 10px;
-  background-color: ${({hasShip, isHovering, shipFits}) => hasShip ? 'lightgrey' : isHovering && shipFits ? 'lightgreen' : isHovering && !shipFits ? 'pink' : 'white'} 
 `
 
+const HoverableContainer = styled.div`
+  ${mainStyle}
+  background-color: ${({hasShip, isHovering, shipFits}) => hasShip ? 'lightgrey' : isHovering && shipFits ? 'lightgreen' : isHovering && !shipFits ? 'pink' : 'white'} 
+`
+const ActiveContainer = styled.div`
+  ${mainStyle}
+  background-color: ${({hasShip, isHovering, shipFits}) => hasShip ? 'lightgrey' : isHovering && shipFits ? 'lightgreen' : isHovering && !shipFits ? 'pink' : 'white'};
+  border: 1px solid ${({isShot, isHit}) => isHit ? 'red' :  isShot ? 'black' : 'lightgrey'}
+`
 
 const Cell = ({
   cell, 
   placeShip, 
   handleHover,
   shipFits,
-  checkShot,
+  handleShot,
   active
   }) => {
     return (
       placeShip !== undefined ?
-        <Container
+        <HoverableContainer
           onClick={() => placeShip(cell)}
           hasShip={cell.shipPiece !== ''}
           onMouseEnter={() => handleHover(cell, 'add')}
@@ -30,9 +38,11 @@ const Cell = ({
         />
       :
         // active ? 
-        <Container 
+        <ActiveContainer 
           hasShip={cell.shipPiece !== ''}
-          onClick={() => checkShot(cell)}
+          onClick={() => handleShot(cell)}
+          isShot={cell.isShot}
+          isHit={cell.shipPiece.hit}
         /> 
         // :
         // <Container 

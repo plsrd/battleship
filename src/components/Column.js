@@ -13,7 +13,7 @@ const Column = ({
   placeShip, 
   handleHover,
   shipFits,
-  checkShot,
+  handleShot,
   active
   }) => {
     return (
@@ -31,7 +31,7 @@ const Column = ({
               <Cell
                 cell={cell}
                 key={cell.id}
-                checkShot={checkShot}
+                handleShot={handleShot}
                 active={active}
               />
           )}

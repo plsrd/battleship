@@ -5,6 +5,7 @@ const createShip = (name, length) => {
       ...pieces,
       {
         id: `${name}${i}`,
+        parent: name,
         hit: false
       }
     ]
