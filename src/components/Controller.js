@@ -28,18 +28,28 @@ const Controller = ({
     let pieces = ship.pieces.slice()
     let newPiece =  {
       ...piece,
-      hit: true
+      hit: true,
     }
-
     pieces.splice(pieces.findIndex(prevPiece => prevPiece.id === piece.id), 1, newPiece)
     ship = {
       ...ship, 
-      pieces: pieces
+      pieces: pieces,
+      sunk: checkSunk(pieces)
     }
-
     let newShips = turn === 'player' ? computerShips : playerShips
     newShips.splice(newShips.findIndex(ship => ship.id === piece.parent), 1, ship)
+    console.log(ship, newShips)
     turn === 'player' ? setComputerShips(newShips) : setPlayerShips(newShips)
+  }
+
+  const checkSunk = (shipPieces) => {
+    let sunk = true
+    shipPieces.forEach(piece => {
+      if (piece.hit === false) {
+        sunk = false
+      }
+    })
+    return sunk
   }
 
   const handleShot = (cell) => {
