@@ -2,8 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Container = styled.div`
-  height: 40px;
-  width: 40px;
+  height: 30px;
+  width: 30px;
   border: 1px solid lightgrey;
   border-radius: 10px;
   background-color: ${({hasShip, isHovering, shipFits}) => hasShip ? 'lightgrey' : isHovering && shipFits ? 'lightgreen' : isHovering && !shipFits ? 'pink' : 'white'} 
@@ -14,7 +14,10 @@ const Cell = ({
   cell, 
   placeShip, 
   handleHover,
-  shipFits }) => {
+  shipFits,
+  checkShot,
+  active
+  }) => {
     return (
       placeShip !== undefined ?
         <Container
@@ -26,9 +29,15 @@ const Cell = ({
           shipFits={shipFits}
         />
       :
+        // active ? 
         <Container 
           hasShip={cell.shipPiece !== ''}
-        />
+          onClick={() => checkShot(cell)}
+        /> 
+        // :
+        // <Container 
+        //   hasShip={cell.shipPiece !== ''}
+        // />
     )
 }
 

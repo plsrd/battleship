@@ -14,7 +14,9 @@ const Gameboard = ({
   selectedShip, 
   placeShip, 
   handleHover, 
-  shipFits
+  shipFits,
+  checkShot,
+  active
   }) => {
     return (
       <Container>
@@ -31,6 +33,8 @@ const Gameboard = ({
             <Column 
               column={board.columns[column]} 
               key={column}
+              checkShot={checkShot}
+              active={active}
             />
           ))}
       </Container>

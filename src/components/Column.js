@@ -12,7 +12,10 @@ const Column = ({
   column, 
   placeShip, 
   handleHover,
-  shipFits}) => {
+  shipFits,
+  checkShot,
+  active
+  }) => {
     return (
         <Container >
           {column.map(cell => 
@@ -27,7 +30,9 @@ const Column = ({
             : 
               <Cell
                 cell={cell}
-                key={cell.id} 
+                key={cell.id}
+                checkShot={checkShot}
+                active={active}
               />
           )}
         </Container>
