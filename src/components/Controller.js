@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import createShips from '../utils/shipFactory'
@@ -22,9 +22,11 @@ const Controller = ({
   const [shot, setShot] = useState({})
   const [playerShips, setPlayerShips] = useState(createShips())
   const [computerShips, setComputerShips] = useState(createShips())
+  const [turnCount, setTurnCount] = useState(0)
+  const [winner, setWinner] = useState('')
 
   const updateShips = (piece) => {
-    let ship = turn === 'player' ? computerShips.find(ship => ship.id === piece.parent) : playerShips.find.find(ship => ship.id === piece.parent)
+    let ship = turn === 'player' ? computerShips.find(ship => ship.id === piece.parent) : playerShips.find(ship => ship.id === piece.parent)
     let pieces = ship.pieces.slice()
     let newPiece =  {
       ...piece,
@@ -38,7 +40,6 @@ const Controller = ({
     }
     let newShips = turn === 'player' ? computerShips : playerShips
     newShips.splice(newShips.findIndex(ship => ship.id === piece.parent), 1, ship)
-    console.log(ship, newShips)
     turn === 'player' ? setComputerShips(newShips) : setPlayerShips(newShips)
   }
 
@@ -83,12 +84,28 @@ const Controller = ({
     if (turn === 'player') {
       setComputerBoard(newBoard)
       //setTurn('computer')
+      setTurnCount(turnCount + 1)
     } else {
       setPlayerBoard(newBoard)
       //setTurn('player')
     }
+
+    if (turnCount >= 16) checkWinner()
   }
-  
+
+  const checkWinner = () => {
+    const ships = turn === 'player' ? computerShips : playerShips
+    let gameWon = true
+    ships.forEach(ship => {
+      if (ship.sunk === false) {
+        gameWon = false
+      }
+    })
+    if (gameWon) {
+      setWinner(turn)
+    } 
+  }
+
   return (
     <Container>
       <Board 
@@ -103,6 +120,7 @@ const Controller = ({
         <h1>{shot.location}</h1>
         <h1>{shot.status}</h1>
         <h1>{turn}</h1>
+        {winner === '' ? null : <h1>{winner} wins!</h1>}
       </div>
     </Container>
   )
