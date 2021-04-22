@@ -14,20 +14,20 @@ const App = () => {
 
   return (
     <>
-      {/* {!gameActive ? 
+      {!gameActive ? 
         <Player 
           playerBoard={playerBoard}
           setPlayerBoard={setPlayerBoard}
           startGame={() => setGameActive(true)}
         />
-      : */}
+      :
         <Controller
           playerBoard={playerBoard}
           setPlayerBoard={setPlayerBoard}
           computerBoard={computerBoard}
           setComputerBoard={setComputerBoard}
         />
-      {/* } */}
+      } 
     </>
   );
 }

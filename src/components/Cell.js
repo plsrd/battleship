@@ -37,17 +37,19 @@ const Cell = ({
           shipFits={shipFits}
         />
       :
-        // active ? 
+        active ? 
         <ActiveContainer 
           hasShip={cell.shipPiece !== ''}
           onClick={() => handleShot(cell)}
           isShot={cell.isShot}
           isHit={cell.shipPiece.hit}
         /> 
-        // :
-        // <Container 
-        //   hasShip={cell.shipPiece !== ''}
-        // />
+        :
+        <ActiveContainer 
+          hasShip={cell.shipPiece !== ''}
+          isShot={cell.isShot}
+          isHit={cell.shipPiece.hit}
+        />
     )
 }
 

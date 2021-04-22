@@ -55,6 +55,7 @@ const Controller = ({
 
   const handleShot = (cell) => {
     const isHit = cell.shipPiece !== ''
+    console.log(isHit, cell)
     if (isHit) { updateShips(cell.shipPiece) }
     setShot({location: cell.id, status: isHit ? 'hit' : 'miss'})
     let newBoard = turn === 'player' ? computerBoard : playerBoard
@@ -83,11 +84,11 @@ const Controller = ({
 
     if (turn === 'player') {
       setComputerBoard(newBoard)
-      //setTurn('computer')
+      setTurn('computer')
       setTurnCount(turnCount + 1)
     } else {
       setPlayerBoard(newBoard)
-      //setTurn('player')
+      setTurn('player')
     }
 
     if (turnCount >= 16) checkWinner()
@@ -105,6 +106,22 @@ const Controller = ({
       setWinner(turn)
     } 
   }
+
+  const generateMove = () => {
+    const move = []
+  
+    while (move.length < 2) {
+     move.push(Math.round(Math.random() * 10))
+    }
+
+    return playerBoard.columns[Object.keys(playerBoard.columns)[move[0]]][move[1]]
+  }
+
+  useEffect(() => {
+    if (turn === 'computer') {
+      handleShot(generateMove())
+    }
+  }, [turn])
 
   return (
     <Container>
